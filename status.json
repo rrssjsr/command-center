@@ -1,11 +1,16 @@
 {
+  "jordan": {
+    "status": "idle",
+    "task": "Waiting for 10 PM campaign start"
+  },
   "campaign": {
     "running": false,
     "status": "Scheduled for 10 PM",
     "leads": 0,
     "total": 100,
     "completed": 0,
-    "success": 0
+    "success": 0,
+    "failed": 0
   },
   "resources": {
     "twilioBalance": "18.02",
@@ -23,6 +28,10 @@
     }
   ],
   "log": [
+    {
+      "time": "17:54",
+      "msg": "Dashboard redesigned with sidebar"
+    },
     {
       "time": "17:51",
       "msg": "Dashboard created"
