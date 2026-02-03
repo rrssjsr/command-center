@@ -1,7 +1,7 @@
 {
   "jordan": {
-    "status": "idle",
-    "task": "Waiting for 10 PM campaign start"
+    "status": "working",
+    "task": "Updating Projects dashboard"
   },
   "campaign": {
     "running": false,
@@ -23,8 +23,23 @@
   ],
   "projects": [
     {
+      "name": "SwiftSites",
+      "icon": "SS",
+      "color": "linear-gradient(135deg, #8b5cf6, #6d28d9)",
+      "status": "active",
+      "lastWorked": "2026-02-03",
+      "pendingTasks": 2,
+      "revenue": "$0",
+      "customers": "0",
+      "mrr": "$0",
+      "tasks": [
+        { "text": "Run first cold call campaign", "done": false },
+        { "text": "Close first client", "done": false }
+      ]
+    },
+    {
       "name": "AttendX",
-      "icon": "A",
+      "icon": "AX",
       "color": "linear-gradient(135deg, #3b82f6, #1d4ed8)",
       "status": "active",
       "lastWorked": "2026-01-28",
@@ -39,18 +54,20 @@
       ]
     },
     {
-      "name": "SwiftSites",
-      "icon": "S",
-      "color": "linear-gradient(135deg, #8b5cf6, #6d28d9)",
+      "name": "Wear N Share",
+      "icon": "WS",
+      "color": "linear-gradient(135deg, #f59e0b, #d97706)",
       "status": "active",
-      "lastWorked": "2026-02-03",
-      "pendingTasks": 2,
-      "revenue": "$0",
-      "customers": "0",
-      "mrr": "$0",
+      "lastWorked": "2026-01-20",
+      "pendingTasks": 4,
+      "revenue": "5L",
+      "customers": "50+",
+      "mrr": "~40k",
       "tasks": [
-        { "text": "Run first cold call campaign", "done": false },
-        { "text": "Close first client", "done": false }
+        { "text": "Scale marketing", "done": false },
+        { "text": "Add more inventory", "done": false },
+        { "text": "Automate order management", "done": false },
+        { "text": "Improve delivery times", "done": false }
       ]
     },
     {
@@ -58,7 +75,7 @@
       "icon": "AF",
       "color": "linear-gradient(135deg, #ec4899, #be185d)",
       "status": "paused",
-      "lastWorked": "2026-01-15",
+      "lastWorked": "2026-01-31",
       "pendingTasks": 5,
       "revenue": "$0",
       "customers": "0",
@@ -70,13 +87,106 @@
         { "text": "Instagram content", "done": false },
         { "text": "First ad campaign", "done": false }
       ]
+    },
+    {
+      "name": "Netflix Resale",
+      "icon": "NF",
+      "color": "linear-gradient(135deg, #e50914, #b81d24)",
+      "status": "active",
+      "lastWorked": "2026-01-25",
+      "pendingTasks": 2,
+      "revenue": "1-4L",
+      "customers": "20+",
+      "mrr": "~15k",
+      "tasks": [
+        { "text": "Automate account delivery", "done": false },
+        { "text": "Scale customer acquisition", "done": false }
+      ]
+    },
+    {
+      "name": "Stake Arbitrage",
+      "icon": "ST",
+      "color": "linear-gradient(135deg, #00d46e, #0a8f4c)",
+      "status": "active",
+      "lastWorked": "2026-01-22",
+      "pendingTasks": 3,
+      "revenue": "1-3L",
+      "customers": "-",
+      "mrr": "Variable",
+      "tasks": [
+        { "text": "Monitor promo opportunities", "done": false },
+        { "text": "Build automation scripts", "done": false },
+        { "text": "Track P&L properly", "done": false }
+      ]
+    },
+    {
+      "name": "Ticket Scalping",
+      "icon": "TS",
+      "color": "linear-gradient(135deg, #06b6d4, #0891b2)",
+      "status": "paused",
+      "lastWorked": "2026-01-15",
+      "pendingTasks": 3,
+      "revenue": "$0",
+      "customers": "-",
+      "mrr": "Seasonal",
+      "tasks": [
+        { "text": "Build drop monitoring bot", "done": false },
+        { "text": "Set up auto-checkout", "done": false },
+        { "text": "Find IPL/concert schedules", "done": false }
+      ]
+    },
+    {
+      "name": "AI Influencer",
+      "icon": "AI",
+      "color": "linear-gradient(135deg, #a855f7, #7c3aed)",
+      "status": "paused",
+      "lastWorked": "2026-01-18",
+      "pendingTasks": 4,
+      "revenue": "$0",
+      "customers": "0",
+      "mrr": "$0",
+      "tasks": [
+        { "text": "Create Nimmy persona", "done": false },
+        { "text": "Generate initial content", "done": false },
+        { "text": "Set up Snap/OF accounts", "done": false },
+        { "text": "DM automation", "done": false }
+      ]
+    },
+    {
+      "name": "AI Services",
+      "icon": "AS",
+      "color": "linear-gradient(135deg, #64748b, #475569)",
+      "status": "idle",
+      "lastWorked": "2026-01-10",
+      "pendingTasks": 2,
+      "revenue": "1-4L",
+      "customers": "5",
+      "mrr": "~20k",
+      "tasks": [
+        { "text": "Productize offerings", "done": false },
+        { "text": "Build portfolio site", "done": false }
+      ]
+    },
+    {
+      "name": "Anonim",
+      "icon": "AN",
+      "color": "linear-gradient(135deg, #1e293b, #0f172a)",
+      "status": "idea",
+      "lastWorked": "-",
+      "pendingTasks": 1,
+      "revenue": "$0",
+      "customers": "0",
+      "mrr": "$0",
+      "tasks": [
+        { "text": "Define concept and scope", "done": false }
+      ]
     }
   ],
   "log": [
+    { "time": "18:49", "msg": "Added all projects to dashboard" },
     { "time": "18:44", "msg": "Added Projects section to dashboard" },
     { "time": "17:58", "msg": "Implemented workflow rules" },
     { "time": "17:54", "msg": "Dashboard redesigned with sidebar" },
-    { "time": "17:37", "msg": "Campaign scheduled for 10 PM" },
-    { "time": "17:34", "msg": "All systems verified ready" }
+    { "time": "17:37", "msg": "Campaign scheduled for 10 PM" }
   ]
 }
