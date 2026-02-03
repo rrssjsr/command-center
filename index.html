@@ -4,34 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #09090b;
-      --surface: #18181b;
-      --surface-2: #27272a;
-      --border: #3f3f46;
-      --text: #fafafa;
-      --text-dim: #a1a1aa;
-      --accent: #3b82f6;
+      --background: #000000;
+      --foreground: #fafafa;
+      --card: #0a0a0a;
+      --card-foreground: #fafafa;
+      --muted: #171717;
+      --muted-foreground: #a3a3a3;
+      --border: #262626;
+      --primary: #fafafa;
+      --primary-foreground: #0a0a0a;
+      --accent: #171717;
+      --accent-foreground: #fafafa;
       --success: #22c55e;
       --warning: #eab308;
-      --error: #ef4444;
+      --destructive: #ef4444;
     }
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
       min-height: 100vh;
       display: flex;
     }
     
     /* Sidebar */
     .sidebar {
-      width: 240px;
-      background: var(--surface);
+      width: 260px;
+      background: var(--card);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
@@ -39,189 +46,178 @@
     }
     
     .sidebar-header {
-      padding: 20px;
+      padding: 24px;
       border-bottom: 1px solid var(--border);
     }
     
     .sidebar-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.05em;
+      color: var(--muted-foreground);
     }
     
     .jordan-status {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 12px;
-      padding: 10px 12px;
-      background: var(--surface-2);
-      border-radius: 8px;
+      gap: 12px;
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--muted);
+      border-radius: 12px;
     }
     
     .jordan-avatar {
-      width: 32px;
-      height: 32px;
-      background: var(--accent);
-      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 16px;
     }
     
     .jordan-info { flex: 1; }
-    .jordan-name { font-size: 13px; font-weight: 500; }
-    .jordan-state { font-size: 11px; color: var(--text-dim); }
+    .jordan-name { font-size: 14px; font-weight: 600; }
+    .jordan-state { font-size: 12px; color: var(--muted-foreground); margin-top: 2px; }
     
     .status-indicator {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: var(--text-dim);
+      background: var(--muted-foreground);
     }
-    .status-indicator.working { background: var(--success); animation: pulse 2s infinite; }
+    .status-indicator.working { background: var(--success); box-shadow: 0 0 12px var(--success); }
     .status-indicator.idle { background: var(--warning); }
-    .status-indicator.disconnected { background: var(--error); }
+    .status-indicator.disconnected { background: var(--destructive); }
     
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
+    .nav { padding: 16px; flex: 1; }
     
-    .nav { padding: 12px; flex: 1; }
-    
-    .nav-section {
-      margin-bottom: 16px;
-    }
+    .nav-section { margin-bottom: 24px; }
     
     .nav-label {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-dim);
-      padding: 8px 12px;
+      letter-spacing: 0.05em;
+      color: var(--muted-foreground);
+      padding: 0 12px 8px;
     }
     
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 6px;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 13px;
-      color: var(--text-dim);
-      transition: all 0.15s;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted-foreground);
+      transition: all 0.2s;
     }
     
-    .nav-item:hover { background: var(--surface-2); color: var(--text); }
-    .nav-item.active { background: var(--accent); color: white; }
+    .nav-item:hover { background: var(--muted); color: var(--foreground); }
+    .nav-item.active { background: var(--foreground); color: var(--background); }
     
-    .nav-icon {
-      width: 18px;
-      height: 18px;
-      opacity: 0.7;
-    }
+    .nav-icon { width: 20px; height: 20px; }
     
     .sidebar-footer {
-      padding: 16px;
+      padding: 20px 24px;
       border-top: 1px solid var(--border);
-      font-size: 11px;
-      color: var(--text-dim);
+      font-size: 12px;
+      color: var(--muted-foreground);
     }
     
-    /* Main Content */
+    /* Main */
     .main {
       flex: 1;
       overflow-y: auto;
-      padding: 24px;
+      padding: 32px;
     }
     
     .page { display: none; }
     .page.active { display: block; }
     
     .page-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
     
     .page-title {
-      font-size: 20px;
-      font-weight: 600;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
     
-    .page-meta {
-      font-size: 12px;
-      color: var(--text-dim);
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-top: 4px;
     }
     
     /* Cards */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
     }
     
     .card {
-      background: var(--surface);
+      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px;
+      border-radius: 16px;
+      padding: 24px;
     }
     
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 20px;
     }
     
     .card-title {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-dim);
+      color: var(--muted-foreground);
     }
     
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
     }
     .status-dot.success { background: var(--success); }
     .status-dot.warning { background: var(--warning); }
-    .status-dot.error { background: var(--error); }
-    .status-dot.inactive { background: var(--text-dim); }
+    .status-dot.error { background: var(--destructive); }
+    .status-dot.inactive { background: var(--muted-foreground); }
     
     .metric {
-      font-size: 36px;
-      font-weight: 600;
-      letter-spacing: -1px;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
     }
     
     .metric-label {
-      font-size: 12px;
-      color: var(--text-dim);
-      margin-top: 4px;
+      font-size: 14px;
+      color: var(--muted-foreground);
+      margin-top: 8px;
     }
     
     .stats-row {
       display: flex;
-      gap: 24px;
-      margin-top: 14px;
-      padding-top: 14px;
+      gap: 32px;
+      margin-top: 20px;
+      padding-top: 20px;
       border-top: 1px solid var(--border);
     }
     
-    .stat-value { font-size: 18px; font-weight: 600; }
-    .stat-label { font-size: 11px; color: var(--text-dim); }
+    .stat-value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+    .stat-label { font-size: 12px; color: var(--muted-foreground); margin-top: 2px; }
     
     .list { list-style: none; }
     
@@ -229,62 +225,65 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
+      padding: 14px 0;
       border-bottom: 1px solid var(--border);
-      font-size: 13px;
+      font-size: 14px;
     }
     .list-item:last-child { border-bottom: none; }
-    .list-item-label { color: var(--text-dim); }
-    .list-item-value { font-weight: 500; }
+    .list-item-label { color: var(--muted-foreground); }
+    .list-item-value { font-weight: 600; }
     .list-item-value.success { color: var(--success); }
     .list-item-value.warning { color: var(--warning); }
-    .list-item-value.error { color: var(--error); }
+    .list-item-value.error { color: var(--destructive); }
     
     .progress-bar {
       width: 100%;
-      height: 6px;
-      background: var(--border);
-      border-radius: 3px;
-      margin-top: 14px;
+      height: 8px;
+      background: var(--muted);
+      border-radius: 4px;
+      margin-top: 20px;
       overflow: hidden;
     }
     
     .progress-fill {
       height: 100%;
-      background: var(--accent);
-      border-radius: 3px;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      border-radius: 4px;
       transition: width 0.3s ease;
     }
     
     /* Log */
     .log {
-      background: var(--bg);
-      border-radius: 6px;
-      padding: 14px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 12px;
-      max-height: 300px;
+      background: var(--muted);
+      border-radius: 12px;
+      padding: 16px;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 13px;
+      max-height: 320px;
       overflow-y: auto;
     }
     
     .log-entry {
-      padding: 6px 0;
+      padding: 8px 0;
       border-bottom: 1px solid var(--border);
       display: flex;
-      gap: 12px;
+      gap: 16px;
     }
     .log-entry:last-child { border-bottom: none; }
-    .log-time { color: var(--text-dim); flex-shrink: 0; width: 50px; }
-    .log-msg { color: var(--text); }
+    .log-time { color: var(--muted-foreground); flex-shrink: 0; width: 60px; }
+    .log-msg { color: var(--foreground); }
     
-    /* Full width */
     .full-width { grid-column: 1 / -1; }
     
-    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar { width: 220px; }
+    }
+    
     @media (max-width: 768px) {
       .sidebar { display: none; }
-      .main { padding: 16px; }
+      .main { padding: 20px; }
       .grid { grid-template-columns: 1fr; }
+      .metric { font-size: 36px; }
     }
   </style>
 </head>
@@ -315,7 +314,7 @@
         </div>
         <div class="nav-item" data-page="logs">
           <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-          Activity Logs
+          Logs
         </div>
       </div>
       
@@ -342,21 +341,21 @@
   </aside>
 
   <main class="main">
-    <!-- Overview Page -->
+    <!-- Overview -->
     <div class="page active" id="page-overview">
       <div class="page-header">
         <h1 class="page-title">Overview</h1>
-        <span class="page-meta" id="overview-time"></span>
+        <p class="page-subtitle" id="overview-time"></p>
       </div>
       
       <div class="grid">
         <div class="card">
           <div class="card-header">
-            <span class="card-title">Jordan Status</span>
+            <span class="card-title">Jordan</span>
             <div class="status-dot" id="overview-jordan-dot"></div>
           </div>
-          <div class="metric" id="overview-jordan-status">--</div>
-          <div class="metric-label" id="overview-jordan-task">No active task</div>
+          <div class="metric" id="overview-jordan-status">Idle</div>
+          <div class="metric-label" id="overview-jordan-task">Waiting for tasks</div>
         </div>
         
         <div class="card">
@@ -373,7 +372,7 @@
         
         <div class="card">
           <div class="card-header">
-            <span class="card-title">System Health</span>
+            <span class="card-title">System</span>
             <div class="status-dot" id="overview-health-dot"></div>
           </div>
           <div class="metric" id="overview-health">--</div>
@@ -389,10 +388,11 @@
       </div>
     </div>
 
-    <!-- Campaign Page -->
+    <!-- Campaign -->
     <div class="page" id="page-campaign">
       <div class="page-header">
         <h1 class="page-title">Campaign</h1>
+        <p class="page-subtitle">Cold outreach progress</p>
       </div>
       
       <div class="grid">
@@ -418,59 +418,42 @@
             <span class="card-title">Call Stats</span>
           </div>
           <ul class="list">
-            <li class="list-item">
-              <span class="list-item-label">Answered</span>
-              <span class="list-item-value" id="campaign-answered">0</span>
-            </li>
-            <li class="list-item">
-              <span class="list-item-label">Voicemail</span>
-              <span class="list-item-value" id="campaign-voicemail">0</span>
-            </li>
-            <li class="list-item">
-              <span class="list-item-label">No Answer</span>
-              <span class="list-item-value" id="campaign-noanswer">0</span>
-            </li>
-            <li class="list-item">
-              <span class="list-item-label">Avg Duration</span>
-              <span class="list-item-value" id="campaign-duration">--</span>
-            </li>
+            <li class="list-item"><span class="list-item-label">Answered</span><span class="list-item-value" id="campaign-answered">0</span></li>
+            <li class="list-item"><span class="list-item-label">Voicemail</span><span class="list-item-value" id="campaign-voicemail">0</span></li>
+            <li class="list-item"><span class="list-item-label">No Answer</span><span class="list-item-value" id="campaign-noanswer">0</span></li>
+            <li class="list-item"><span class="list-item-label">Avg Duration</span><span class="list-item-value" id="campaign-duration">--</span></li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- Logs Page -->
+    <!-- Logs -->
     <div class="page" id="page-logs">
       <div class="page-header">
         <h1 class="page-title">Activity Logs</h1>
+        <p class="page-subtitle">Full activity history</p>
       </div>
-      
       <div class="card">
-        <div class="log" id="logs-full" style="max-height: 500px;"></div>
+        <div class="log" id="logs-full" style="max-height: 600px;"></div>
       </div>
     </div>
 
-    <!-- Services Page -->
+    <!-- Services -->
     <div class="page" id="page-services">
       <div class="page-header">
         <h1 class="page-title">Services</h1>
+        <p class="page-subtitle">System health status</p>
       </div>
       
       <div class="grid">
         <div class="card">
           <div class="card-header">
-            <span class="card-title">Cold Caller Server</span>
+            <span class="card-title">Cold Caller</span>
             <div class="status-dot" id="service-caller-dot"></div>
           </div>
           <ul class="list">
-            <li class="list-item">
-              <span class="list-item-label">Status</span>
-              <span class="list-item-value" id="service-caller-status">--</span>
-            </li>
-            <li class="list-item">
-              <span class="list-item-label">URL</span>
-              <span class="list-item-value">caller.attendx.site</span>
-            </li>
+            <li class="list-item"><span class="list-item-label">Status</span><span class="list-item-value" id="service-caller-status">--</span></li>
+            <li class="list-item"><span class="list-item-label">URL</span><span class="list-item-value">caller.attendx.site</span></li>
           </ul>
         </div>
         
@@ -480,55 +463,42 @@
             <div class="status-dot" id="service-twilio-dot"></div>
           </div>
           <ul class="list">
-            <li class="list-item">
-              <span class="list-item-label">Status</span>
-              <span class="list-item-value" id="service-twilio-status">--</span>
-            </li>
-            <li class="list-item">
-              <span class="list-item-label">Number</span>
-              <span class="list-item-value">+1 908-223-8612</span>
-            </li>
+            <li class="list-item"><span class="list-item-label">Status</span><span class="list-item-value" id="service-twilio-status">--</span></li>
+            <li class="list-item"><span class="list-item-label">Number</span><span class="list-item-value">+1 908-223-8612</span></li>
           </ul>
         </div>
         
         <div class="card">
           <div class="card-header">
-            <span class="card-title">Browser (OpenClaw)</span>
+            <span class="card-title">Browser</span>
             <div class="status-dot" id="service-browser-dot"></div>
           </div>
           <ul class="list">
-            <li class="list-item">
-              <span class="list-item-label">Status</span>
-              <span class="list-item-value" id="service-browser-status">--</span>
-            </li>
-            <li class="list-item">
-              <span class="list-item-label">Port</span>
-              <span class="list-item-value">18800</span>
-            </li>
+            <li class="list-item"><span class="list-item-label">Status</span><span class="list-item-value" id="service-browser-status">--</span></li>
+            <li class="list-item"><span class="list-item-label">Port</span><span class="list-item-value">18800</span></li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- Scheduled Page -->
+    <!-- Scheduled -->
     <div class="page" id="page-scheduled">
       <div class="page-header">
-        <h1 class="page-title">Scheduled Tasks</h1>
+        <h1 class="page-title">Scheduled</h1>
+        <p class="page-subtitle">Upcoming tasks</p>
       </div>
-      
       <div class="card">
         <ul class="list" id="scheduled-list">
-          <li class="list-item">
-            <span class="list-item-label">Loading...</span>
-          </li>
+          <li class="list-item"><span class="list-item-label">Loading...</span></li>
         </ul>
       </div>
     </div>
 
-    <!-- Resources Page -->
+    <!-- Resources -->
     <div class="page" id="page-resources">
       <div class="page-header">
         <h1 class="page-title">Resources</h1>
+        <p class="page-subtitle">API credits and balances</p>
       </div>
       
       <div class="grid">
@@ -548,7 +518,7 @@
             <span class="card-title">ElevenLabs</span>
           </div>
           <div class="metric" id="resource-eleven-chars">--</div>
-          <div class="metric-label">Characters Remaining</div>
+          <div class="metric-label">Characters Left</div>
         </div>
       </div>
     </div>
@@ -557,10 +527,8 @@
   <script>
     const API_BASE = 'https://caller.attendx.site';
     const STATUS_URL = './status.json';
-    
     let activityLog = [];
     
-    // Navigation
     document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', () => {
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -570,144 +538,79 @@
       });
     });
     
-    function formatTime(date) {
-      return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-    }
+    function formatTime(d) { return d.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }); }
     
-    function renderLog(containerId, log, limit = 10) {
-      const el = document.getElementById(containerId);
-      const entries = (log || []).slice(0, limit);
-      el.innerHTML = entries.map(e => `
-        <div class="log-entry">
-          <span class="log-time">${e.time}</span>
-          <span class="log-msg">${e.msg}</span>
-        </div>
-      `).join('') || '<div class="log-entry"><span class="log-msg">No activity</span></div>';
+    function renderLog(id, log, limit = 10) {
+      const el = document.getElementById(id);
+      el.innerHTML = (log || []).slice(0, limit).map(e => `<div class="log-entry"><span class="log-time">${e.time}</span><span class="log-msg">${e.msg}</span></div>`).join('') || '<div class="log-entry"><span class="log-msg">No activity</span></div>';
     }
     
     function setJordanStatus(status, task) {
-      const indicator = document.getElementById('jordan-indicator');
-      const stateText = document.getElementById('jordan-state-text');
-      const overviewDot = document.getElementById('overview-jordan-dot');
-      const overviewStatus = document.getElementById('overview-jordan-status');
-      const overviewTask = document.getElementById('overview-jordan-task');
-      
-      indicator.className = 'status-indicator ' + status;
-      overviewDot.className = 'status-dot ' + (status === 'working' ? 'success' : status === 'idle' ? 'warning' : 'error');
-      
-      const statusText = status.charAt(0).toUpperCase() + status.slice(1);
-      stateText.textContent = statusText;
-      overviewStatus.textContent = statusText;
-      overviewTask.textContent = task || 'No active task';
+      document.getElementById('jordan-indicator').className = 'status-indicator ' + status;
+      document.getElementById('overview-jordan-dot').className = 'status-dot ' + (status === 'working' ? 'success' : status === 'idle' ? 'warning' : 'error');
+      const text = status.charAt(0).toUpperCase() + status.slice(1);
+      document.getElementById('jordan-state-text').textContent = text;
+      document.getElementById('overview-jordan-status').textContent = text;
+      document.getElementById('overview-jordan-task').textContent = task || 'No active task';
     }
     
-    async function checkCallerHealth() {
+    async function checkHealth() {
       try {
         const res = await fetch(`${API_BASE}/health`, { mode: 'cors' });
         const data = await res.json();
-        
         document.getElementById('service-caller-status').textContent = 'Online';
         document.getElementById('service-caller-status').className = 'list-item-value success';
         document.getElementById('service-caller-dot').className = 'status-dot success';
-        
         document.getElementById('service-twilio-status').textContent = data.twilio ? 'Connected' : 'Error';
         document.getElementById('service-twilio-status').className = data.twilio ? 'list-item-value success' : 'list-item-value error';
         document.getElementById('service-twilio-dot').className = data.twilio ? 'status-dot success' : 'status-dot error';
-        
         document.getElementById('overview-health').textContent = '3/3';
         document.getElementById('overview-health-dot').className = 'status-dot success';
-        
-        return true;
-      } catch (e) {
+      } catch {
         document.getElementById('service-caller-status').textContent = 'Offline';
         document.getElementById('service-caller-status').className = 'list-item-value error';
         document.getElementById('service-caller-dot').className = 'status-dot error';
         document.getElementById('overview-health').textContent = '?/3';
         document.getElementById('overview-health-dot').className = 'status-dot error';
-        return false;
       }
     }
     
     async function fetchStatus() {
       try {
-        const res = await fetch(STATUS_URL + '?t=' + Date.now());
-        const data = await res.json();
-        
-        // Jordan status
-        if (data.jordan) {
-          setJordanStatus(data.jordan.status || 'idle', data.jordan.task);
-        }
-        
-        // Campaign
+        const data = await (await fetch(STATUS_URL + '?t=' + Date.now())).json();
+        if (data.jordan) setJordanStatus(data.jordan.status || 'idle', data.jordan.task);
         if (data.campaign) {
-          const c = data.campaign;
-          const progress = c.total > 0 ? Math.round((c.completed / c.total) * 100) : 0;
-          
-          document.getElementById('overview-campaign-progress').textContent = progress + '%';
-          document.getElementById('overview-campaign-status').textContent = c.status || 'Not running';
-          document.getElementById('overview-progress-fill').style.width = progress + '%';
+          const c = data.campaign, p = c.total > 0 ? Math.round((c.completed / c.total) * 100) : 0;
+          ['overview-campaign-progress', 'campaign-progress'].forEach(id => document.getElementById(id).textContent = p + '%');
+          ['overview-campaign-status', 'campaign-status'].forEach(id => document.getElementById(id).textContent = c.status || 'Not running');
+          ['overview-progress-fill', 'campaign-progress-fill'].forEach(id => document.getElementById(id).style.width = p + '%');
           document.getElementById('overview-campaign-dot').className = c.running ? 'status-dot success' : 'status-dot inactive';
-          
-          document.getElementById('campaign-progress').textContent = progress + '%';
-          document.getElementById('campaign-status').textContent = c.status || 'Not running';
-          document.getElementById('campaign-progress-fill').style.width = progress + '%';
           document.getElementById('campaign-leads').textContent = c.leads || 0;
           document.getElementById('campaign-calls').textContent = c.completed || 0;
           document.getElementById('campaign-success').textContent = c.success || 0;
           document.getElementById('campaign-failed').textContent = c.failed || 0;
         }
-        
-        // Resources
         if (data.resources) {
           document.getElementById('resource-twilio-balance').textContent = '$' + (data.resources.twilioBalance || '--');
-          document.getElementById('resource-eleven-chars').textContent = (data.resources.elevenChars || '--');
+          document.getElementById('resource-eleven-chars').textContent = data.resources.elevenChars || '--';
           document.getElementById('resource-est-calls').textContent = data.resources.estCalls || '--';
         }
-        
-        // Scheduled
-        if (data.cron && data.cron.length > 0) {
-          document.getElementById('scheduled-list').innerHTML = data.cron.map(j => `
-            <li class="list-item">
-              <span class="list-item-label">${j.name}</span>
-              <span class="list-item-value">${j.next || '--'}</span>
-            </li>
-          `).join('');
-        }
-        
-        // Logs
-        if (data.log) {
-          activityLog = data.log;
-          renderLog('overview-log', activityLog, 8);
-          renderLog('logs-full', activityLog, 50);
-        }
-        
-      } catch (e) {
-        // Status file not found
-      }
+        if (data.cron?.length) document.getElementById('scheduled-list').innerHTML = data.cron.map(j => `<li class="list-item"><span class="list-item-label">${j.name}</span><span class="list-item-value">${j.next || '--'}</span></li>`).join('');
+        if (data.log) { activityLog = data.log; renderLog('overview-log', activityLog, 8); renderLog('logs-full', activityLog, 50); }
+      } catch {}
     }
     
     async function init() {
-      const now = new Date();
-      document.getElementById('last-update').textContent = 'Updated: ' + formatTime(now);
-      document.getElementById('overview-time').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-      
+      document.getElementById('last-update').textContent = 'Updated: ' + formatTime(new Date());
+      document.getElementById('overview-time').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
       document.getElementById('service-browser-status').textContent = 'Ready';
       document.getElementById('service-browser-status').className = 'list-item-value success';
       document.getElementById('service-browser-dot').className = 'status-dot success';
-      
       setJordanStatus('idle', 'Waiting for tasks');
-      
-      await checkCallerHealth();
+      await checkHealth();
       await fetchStatus();
-      
-      // Refresh every 30s
-      setInterval(async () => {
-        document.getElementById('last-update').textContent = 'Updated: ' + formatTime(new Date());
-        await checkCallerHealth();
-        await fetchStatus();
-      }, 30000);
+      setInterval(async () => { document.getElementById('last-update').textContent = 'Updated: ' + formatTime(new Date()); await checkHealth(); await fetchStatus(); }, 30000);
     }
-    
     init();
   </script>
 </body>
