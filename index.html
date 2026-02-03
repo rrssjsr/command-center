@@ -35,7 +35,6 @@
       display: flex;
     }
     
-    /* Sidebar */
     .sidebar {
       width: 260px;
       background: var(--card);
@@ -93,8 +92,7 @@
     .status-indicator.idle { background: var(--warning); }
     .status-indicator.disconnected { background: var(--destructive); }
     
-    .nav { padding: 16px; flex: 1; }
-    
+    .nav { padding: 16px; flex: 1; overflow-y: auto; }
     .nav-section { margin-bottom: 24px; }
     
     .nav-label {
@@ -121,7 +119,6 @@
     
     .nav-item:hover { background: var(--muted); color: var(--foreground); }
     .nav-item.active { background: var(--foreground); color: var(--background); }
-    
     .nav-icon { width: 20px; height: 20px; }
     
     .sidebar-footer {
@@ -131,7 +128,6 @@
       color: var(--muted-foreground);
     }
     
-    /* Main */
     .main {
       flex: 1;
       overflow-y: auto;
@@ -141,23 +137,10 @@
     .page { display: none; }
     .page.active { display: block; }
     
-    .page-header {
-      margin-bottom: 32px;
-    }
+    .page-header { margin-bottom: 32px; }
+    .page-title { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+    .page-subtitle { font-size: 14px; color: var(--muted-foreground); margin-top: 4px; }
     
-    .page-title {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    
-    .page-subtitle {
-      font-size: 14px;
-      color: var(--muted-foreground);
-      margin-top: 4px;
-    }
-    
-    /* Cards */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -179,34 +162,16 @@
       margin-bottom: 20px;
     }
     
-    .card-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--muted-foreground);
-    }
+    .card-title { font-size: 14px; font-weight: 500; color: var(--muted-foreground); }
     
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; }
     .status-dot.success { background: var(--success); }
     .status-dot.warning { background: var(--warning); }
     .status-dot.error { background: var(--destructive); }
     .status-dot.inactive { background: var(--muted-foreground); }
     
-    .metric {
-      font-size: 48px;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1;
-    }
-    
-    .metric-label {
-      font-size: 14px;
-      color: var(--muted-foreground);
-      margin-top: 8px;
-    }
+    .metric { font-size: 48px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+    .metric-label { font-size: 14px; color: var(--muted-foreground); margin-top: 8px; }
     
     .stats-row {
       display: flex;
@@ -220,7 +185,6 @@
     .stat-label { font-size: 12px; color: var(--muted-foreground); margin-top: 2px; }
     
     .list { list-style: none; }
-    
     .list-item {
       display: flex;
       justify-content: space-between;
@@ -252,7 +216,6 @@
       transition: width 0.3s ease;
     }
     
-    /* Log */
     .log {
       background: var(--muted);
       border-radius: 12px;
@@ -275,15 +238,114 @@
     
     .full-width { grid-column: 1 / -1; }
     
-    @media (max-width: 900px) {
-      .sidebar { width: 220px; }
+    /* Project Cards */
+    .project-list { display: flex; flex-direction: column; gap: 12px; }
+    
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
     
+    .project-card:hover { border-color: var(--muted-foreground); }
+    .project-card.expanded { border-color: #3b82f6; }
+    
+    .project-header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      gap: 16px;
+    }
+    
+    .project-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    
+    .project-info { flex: 1; min-width: 0; }
+    .project-name { font-size: 16px; font-weight: 600; }
+    .project-meta { font-size: 13px; color: var(--muted-foreground); margin-top: 4px; display: flex; gap: 16px; }
+    
+    .project-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted-foreground);
+    }
+    
+    .project-chevron {
+      width: 20px;
+      height: 20px;
+      color: var(--muted-foreground);
+      transition: transform 0.2s;
+    }
+    
+    .project-card.expanded .project-chevron { transform: rotate(180deg); }
+    
+    .project-details {
+      display: none;
+      padding: 0 20px 20px;
+      border-top: 1px solid var(--border);
+      margin-top: 0;
+    }
+    
+    .project-card.expanded .project-details { display: block; padding-top: 20px; }
+    
+    .project-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .project-stat {
+      background: var(--muted);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    
+    .project-stat-value { font-size: 24px; font-weight: 700; }
+    .project-stat-label { font-size: 12px; color: var(--muted-foreground); margin-top: 4px; }
+    
+    .project-tasks { margin-top: 16px; }
+    .project-tasks-title { font-size: 13px; font-weight: 600; color: var(--muted-foreground); margin-bottom: 12px; }
+    
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .task-item:last-child { border-bottom: none; }
+    
+    .task-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .task-checkbox.done { background: var(--success); border-color: var(--success); }
+    
+    @media (max-width: 900px) { .sidebar { width: 220px; } }
     @media (max-width: 768px) {
       .sidebar { display: none; }
       .main { padding: 20px; }
       .grid { grid-template-columns: 1fr; }
       .metric { font-size: 36px; }
+      .project-stats { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -307,6 +369,10 @@
         <div class="nav-item active" data-page="overview">
           <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
           Overview
+        </div>
+        <div class="nav-item" data-page="projects">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+          Projects
         </div>
         <div class="nav-item" data-page="campaign">
           <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
@@ -386,6 +452,16 @@
           <div class="log" id="overview-log"></div>
         </div>
       </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="page" id="page-projects">
+      <div class="page-header">
+        <h1 class="page-title">Projects</h1>
+        <p class="page-subtitle">All businesses and ventures</p>
+      </div>
+      
+      <div class="project-list" id="project-list"></div>
     </div>
 
     <!-- Campaign -->
@@ -529,6 +605,7 @@
     const STATUS_URL = './status.json';
     let activityLog = [];
     
+    // Navigation
     document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', () => {
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -552,6 +629,60 @@
       document.getElementById('jordan-state-text').textContent = text;
       document.getElementById('overview-jordan-status').textContent = text;
       document.getElementById('overview-jordan-task').textContent = task || 'No active task';
+    }
+    
+    // Projects
+    function renderProjects(projects) {
+      const container = document.getElementById('project-list');
+      container.innerHTML = projects.map((p, i) => `
+        <div class="project-card" data-index="${i}" onclick="toggleProject(${i})">
+          <div class="project-header">
+            <div class="project-icon" style="background: ${p.color}">${p.icon}</div>
+            <div class="project-info">
+              <div class="project-name">${p.name}</div>
+              <div class="project-meta">
+                <span>Last: ${p.lastWorked}</span>
+                <span>${p.pendingTasks} tasks pending</span>
+              </div>
+            </div>
+            <div class="project-status">
+              <div class="status-dot ${p.status === 'active' ? 'success' : p.status === 'paused' ? 'warning' : 'inactive'}"></div>
+              <span>${p.status}</span>
+            </div>
+            <svg class="project-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </div>
+          <div class="project-details">
+            <div class="project-stats">
+              <div class="project-stat">
+                <div class="project-stat-value">${p.revenue}</div>
+                <div class="project-stat-label">Revenue</div>
+              </div>
+              <div class="project-stat">
+                <div class="project-stat-value">${p.customers}</div>
+                <div class="project-stat-label">Customers</div>
+              </div>
+              <div class="project-stat">
+                <div class="project-stat-value">${p.mrr}</div>
+                <div class="project-stat-label">MRR</div>
+              </div>
+            </div>
+            <div class="project-tasks">
+              <div class="project-tasks-title">Pending Tasks</div>
+              ${p.tasks.map(t => `
+                <div class="task-item">
+                  <div class="task-checkbox ${t.done ? 'done' : ''}"></div>
+                  <span>${t.text}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function toggleProject(index) {
+      const cards = document.querySelectorAll('.project-card');
+      cards[index].classList.toggle('expanded');
     }
     
     async function checkHealth() {
@@ -597,6 +728,7 @@
         }
         if (data.cron?.length) document.getElementById('scheduled-list').innerHTML = data.cron.map(j => `<li class="list-item"><span class="list-item-label">${j.name}</span><span class="list-item-value">${j.next || '--'}</span></li>`).join('');
         if (data.log) { activityLog = data.log; renderLog('overview-log', activityLog, 8); renderLog('logs-full', activityLog, 50); }
+        if (data.projects) renderProjects(data.projects);
       } catch {}
     }
     

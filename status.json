@@ -18,31 +18,65 @@
     "estCalls": "180"
   },
   "cron": [
+    { "name": "9 PM Reminder", "next": "21:00" },
+    { "name": "Campaign Start", "next": "22:00" }
+  ],
+  "projects": [
     {
-      "name": "9 PM Reminder",
-      "next": "21:00"
+      "name": "AttendX",
+      "icon": "A",
+      "color": "linear-gradient(135deg, #3b82f6, #1d4ed8)",
+      "status": "active",
+      "lastWorked": "2026-01-28",
+      "pendingTasks": 3,
+      "revenue": "$0",
+      "customers": "0",
+      "mrr": "$0",
+      "tasks": [
+        { "text": "Fix dashboard loading issue", "done": false },
+        { "text": "Add export to CSV feature", "done": false },
+        { "text": "Marketing landing page", "done": false }
+      ]
     },
     {
-      "name": "Campaign Start",
-      "next": "22:00"
+      "name": "SwiftSites",
+      "icon": "S",
+      "color": "linear-gradient(135deg, #8b5cf6, #6d28d9)",
+      "status": "active",
+      "lastWorked": "2026-02-03",
+      "pendingTasks": 2,
+      "revenue": "$0",
+      "customers": "0",
+      "mrr": "$0",
+      "tasks": [
+        { "text": "Run first cold call campaign", "done": false },
+        { "text": "Close first client", "done": false }
+      ]
+    },
+    {
+      "name": "Asmera Fashion",
+      "icon": "AF",
+      "color": "linear-gradient(135deg, #ec4899, #be185d)",
+      "status": "paused",
+      "lastWorked": "2026-01-15",
+      "pendingTasks": 5,
+      "revenue": "$0",
+      "customers": "0",
+      "mrr": "$0",
+      "tasks": [
+        { "text": "Source suppliers", "done": false },
+        { "text": "Build Shopify store", "done": false },
+        { "text": "Product photography", "done": false },
+        { "text": "Instagram content", "done": false },
+        { "text": "First ad campaign", "done": false }
+      ]
     }
   ],
   "log": [
-    {
-      "time": "17:54",
-      "msg": "Dashboard redesigned with sidebar"
-    },
-    {
-      "time": "17:51",
-      "msg": "Dashboard created"
-    },
-    {
-      "time": "17:37",
-      "msg": "Campaign scheduled for 10 PM"
-    },
-    {
-      "time": "17:34",
-      "msg": "All systems verified ready"
-    }
+    { "time": "18:44", "msg": "Added Projects section to dashboard" },
+    { "time": "17:58", "msg": "Implemented workflow rules" },
+    { "time": "17:54", "msg": "Dashboard redesigned with sidebar" },
+    { "time": "17:37", "msg": "Campaign scheduled for 10 PM" },
+    { "time": "17:34", "msg": "All systems verified ready" }
   ]
 }
