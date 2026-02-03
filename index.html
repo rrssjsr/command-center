@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Center</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --border: #262626;
+      --text: #fafafa;
+      --text-dim: #a1a1aa;
+      --accent: #3b82f6;
+      --success: #22c55e;
+      --warning: #eab308;
+      --error: #ef4444;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+    
+    .header-meta {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .card-title {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-dim);
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+    
+    .status-dot.warning { background: var(--warning); }
+    .status-dot.error { background: var(--error); }
+    .status-dot.inactive { background: var(--text-dim); }
+    
+    .metric {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -1px;
+    }
+    
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+    
+    .stats-row {
+      display: flex;
+      gap: 24px;
+      margin-top: 12px;
+    }
+    
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .stat-value {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    
+    .list {
+      list-style: none;
+    }
+    
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    
+    .list-item:last-child {
+      border-bottom: none;
+    }
+    
+    .list-item-label {
+      color: var(--text-dim);
+    }
+    
+    .list-item-value {
+      font-weight: 500;
+    }
+    
+    .list-item-value.success { color: var(--success); }
+    .list-item-value.warning { color: var(--warning); }
+    .list-item-value.error { color: var(--error); }
+    
+    .log {
+      background: var(--bg);
+      border-radius: 4px;
+      padding: 12px;
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .log-entry {
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+    }
+    
+    .log-entry:last-child {
+      border-bottom: none;
+    }
+    
+    .log-time {
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+    
+    .log-msg {
+      color: var(--text);
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    
+    .btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover {
+      background: var(--border);
+    }
+    
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .full-width {
+      grid-column: 1 / -1;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 16px;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .metric {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>COMMAND CENTER</h1>
+    <span class="header-meta" id="last-update">Loading...</span>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">System Status</span>
+        <div class="status-dot" id="system-status-dot"></div>
+      </div>
+      <ul class="list">
+        <li class="list-item">
+          <span class="list-item-label">Cold Caller</span>
+          <span class="list-item-value" id="caller-status">--</span>
+        </li>
+        <li class="list-item">
+          <span class="list-item-label">Twilio</span>
+          <span class="list-item-value" id="twilio-status">--</span>
+        </li>
+        <li class="list-item">
+          <span class="list-item-label">Browser</span>
+          <span class="list-item-value" id="browser-status">--</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Campaign</span>
+        <div class="status-dot inactive" id="campaign-status-dot"></div>
+      </div>
+      <div class="metric" id="campaign-progress">0%</div>
+      <div class="metric-label" id="campaign-label">Not running</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-value" id="leads-count">0</span>
+          <span class="stat-label">Leads</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="calls-count">0</span>
+          <span class="stat-label">Calls</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="success-count">0</span>
+          <span class="stat-label">Success</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Resources</span>
+      </div>
+      <ul class="list">
+        <li class="list-item">
+          <span class="list-item-label">Twilio Balance</span>
+          <span class="list-item-value" id="twilio-balance">--</span>
+        </li>
+        <li class="list-item">
+          <span class="list-item-label">ElevenLabs</span>
+          <span class="list-item-value" id="eleven-chars">--</span>
+        </li>
+        <li class="list-item">
+          <span class="list-item-label">Est. Calls Left</span>
+          <span class="list-item-value" id="est-calls">--</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Scheduled</span>
+      </div>
+      <ul class="list" id="cron-list">
+        <li class="list-item">
+          <span class="list-item-label">Loading...</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card full-width">
+      <div class="card-header">
+        <span class="card-title">Activity Log</span>
+        <button class="btn" onclick="clearLog()">Clear</button>
+      </div>
+      <div class="log" id="activity-log">
+        <div class="log-entry">
+          <span class="log-time">--:--</span>
+          <span class="log-msg">Waiting for activity...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'https://caller.attendx.site';
+    const STATUS_URL = './status.json';
+    
+    let activityLog = [];
+    
+    function formatTime(date) {
+      return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    }
+    
+    function addLog(msg) {
+      activityLog.unshift({ time: formatTime(new Date()), msg });
+      if (activityLog.length > 50) activityLog.pop();
+      renderLog();
+    }
+    
+    function renderLog() {
+      const el = document.getElementById('activity-log');
+      el.innerHTML = activityLog.map(e => `
+        <div class="log-entry">
+          <span class="log-time">${e.time}</span>
+          <span class="log-msg">${e.msg}</span>
+        </div>
+      `).join('') || '<div class="log-entry"><span class="log-msg">No activity</span></div>';
+    }
+    
+    function clearLog() {
+      activityLog = [];
+      renderLog();
+    }
+    
+    async function checkCallerHealth() {
+      try {
+        const res = await fetch(`${API_BASE}/health`, { mode: 'cors' });
+        const data = await res.json();
+        document.getElementById('caller-status').textContent = 'Online';
+        document.getElementById('caller-status').className = 'list-item-value success';
+        document.getElementById('twilio-status').textContent = data.twilio ? 'Connected' : 'Error';
+        document.getElementById('twilio-status').className = data.twilio ? 'list-item-value success' : 'list-item-value error';
+        document.getElementById('system-status-dot').className = 'status-dot';
+        return true;
+      } catch (e) {
+        document.getElementById('caller-status').textContent = 'Offline';
+        document.getElementById('caller-status').className = 'list-item-value error';
+        document.getElementById('system-status-dot').className = 'status-dot error';
+        return false;
+      }
+    }
+    
+    async function fetchStatus() {
+      try {
+        const res = await fetch(STATUS_URL + '?t=' + Date.now());
+        const data = await res.json();
+        
+        // Campaign
+        if (data.campaign) {
+          const c = data.campaign;
+          const progress = c.total > 0 ? Math.round((c.completed / c.total) * 100) : 0;
+          document.getElementById('campaign-progress').textContent = progress + '%';
+          document.getElementById('campaign-label').textContent = c.status || 'Running';
+          document.getElementById('progress-fill').style.width = progress + '%';
+          document.getElementById('campaign-status-dot').className = c.running ? 'status-dot' : 'status-dot inactive';
+          document.getElementById('leads-count').textContent = c.leads || 0;
+          document.getElementById('calls-count').textContent = c.completed || 0;
+          document.getElementById('success-count').textContent = c.success || 0;
+        }
+        
+        // Resources
+        if (data.resources) {
+          document.getElementById('twilio-balance').textContent = '$' + (data.resources.twilioBalance || '--');
+          document.getElementById('eleven-chars').textContent = (data.resources.elevenChars || '--') + ' chars';
+          document.getElementById('est-calls').textContent = data.resources.estCalls || '--';
+        }
+        
+        // Cron
+        if (data.cron && data.cron.length > 0) {
+          document.getElementById('cron-list').innerHTML = data.cron.map(j => `
+            <li class="list-item">
+              <span class="list-item-label">${j.name}</span>
+              <span class="list-item-value">${j.next || '--'}</span>
+            </li>
+          `).join('');
+        }
+        
+        // Log
+        if (data.log) {
+          activityLog = data.log;
+          renderLog();
+        }
+        
+      } catch (e) {
+        // Status file not found - that's ok
+      }
+    }
+    
+    async function init() {
+      document.getElementById('last-update').textContent = 'Updated: ' + formatTime(new Date());
+      document.getElementById('browser-status').textContent = 'Ready';
+      document.getElementById('browser-status').className = 'list-item-value success';
+      
+      await checkCallerHealth();
+      await fetchStatus();
+      
+      addLog('Dashboard initialized');
+      
+      // Refresh every 30s
+      setInterval(async () => {
+        document.getElementById('last-update').textContent = 'Updated: ' + formatTime(new Date());
+        await checkCallerHealth();
+        await fetchStatus();
+      }, 30000);
+    }
+    
+    init();
+  </script>
+</body>
+</html>

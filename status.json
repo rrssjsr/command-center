@@ -1,0 +1,39 @@
+{
+  "campaign": {
+    "running": false,
+    "status": "Scheduled for 10 PM",
+    "leads": 0,
+    "total": 100,
+    "completed": 0,
+    "success": 0
+  },
+  "resources": {
+    "twilioBalance": "18.02",
+    "elevenChars": "99000",
+    "estCalls": "180"
+  },
+  "cron": [
+    {
+      "name": "9 PM Reminder",
+      "next": "21:00"
+    },
+    {
+      "name": "Campaign Start",
+      "next": "22:00"
+    }
+  ],
+  "log": [
+    {
+      "time": "17:51",
+      "msg": "Dashboard created"
+    },
+    {
+      "time": "17:37",
+      "msg": "Campaign scheduled for 10 PM"
+    },
+    {
+      "time": "17:34",
+      "msg": "All systems verified ready"
+    }
+  ]
+}
